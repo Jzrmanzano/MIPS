@@ -1,0 +1,28 @@
+# | Register | Usage     | Type    | Purpose                    |
+# | -------- | --------- | ------- | -------------------------- |
+# | `$a0`    | input     | integer | given value                |
+# | `$v0`    | output    | integer | difference of squares      |
+# | `$t0-9`  | temporary | any     | used for temporary storage |
+
+.globl difference_of_squares
+     
+difference_of_squares:
+
+        li $t0, 0
+        li $t1, 0
+        li $t2, 1
+loop: 
+        bgt $t2, $a0, end_loop
+
+        addu $t0, $t0, $t2
+
+        mul $t3, $t2, $t2
+        addu $t1, $t1, $t3
+
+        addiu $t2, $t2, 1
+
+        j loop
+end_loop:
+        mul $t4, $t0, $t0
+        subu $v0, $t4, $t1
+        jr $ra
